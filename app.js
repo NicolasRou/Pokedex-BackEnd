@@ -62,7 +62,7 @@ app.get ('/pokemones', async (req,res,next) => {
                                     
   }
   
-  return res.status(200).json ({data: pokemonResults})
+  return res.status(200).json({data: pokemonResults})
 
   } catch (error) {
     return next (error)
@@ -70,6 +70,10 @@ app.get ('/pokemones', async (req,res,next) => {
   }})
 
 
+  app.post('/agregarPokemon', (req,res,next) =>{
+    
+
+  })
 
 
  
