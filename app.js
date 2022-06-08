@@ -2,16 +2,21 @@ const express = require('express')
 const axios = require('axios');
 const db = require('./db/index');
 const app = express()
-const port = 3000
+const bodyParser = require("body-parser")
+const port = 5431
+const cors = require ("cors")
 
+
+
+app.use (cors())
+app.use(bodyParser.urlencoded({extended:false}))
+app.use(bodyParser.json());
 
 app.get ('/pokemones', async (req,res,next) => {
 
   try {
 
     const pokemonResults = []
-
-  
 
 
     const pokemones = await db.query(`SELECT p.id pokemon_id,
@@ -27,7 +32,8 @@ app.get ('/pokemones', async (req,res,next) => {
                                       bs.atk,
                                       bs.satk,
                                       bs.sdef,
-                                      bs.spd
+                                      bs.spd,
+                                      img
                                   FROM   pokemon p
                                       JOIN about a
                                         ON a.id = p.about_id
@@ -37,7 +43,9 @@ app.get ('/pokemones', async (req,res,next) => {
    for (let index = 0; index < pokemones.rows.length; index++) {
 
      pokemonResults.push({
+       id: pokemones.rows[index].pokemon_id,
        name:pokemones.rows[index].name,
+       img:pokemones.rows[index].img,
        about:{
          height:pokemones.rows[index].height,
          weight:pokemones.rows[index].weight,
@@ -62,7 +70,7 @@ app.get ('/pokemones', async (req,res,next) => {
                                     
   }
   
-  return res.status(200).json({data: pokemonResults})
+  return res.status(200).json({loading:false, data: {results:pokemonResults}})
 
   } catch (error) {
     return next (error)
@@ -71,7 +79,7 @@ app.get ('/pokemones', async (req,res,next) => {
 
 
   app.post('/agregarPokemon', (req,res,next) =>{
-    
+
 
   })
 
