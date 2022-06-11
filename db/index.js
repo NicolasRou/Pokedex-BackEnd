@@ -3,8 +3,8 @@ const { Pool } = require("pg");
 const config = {
   user: "postgres",
   host: "localhost",
-  password: "basesback",
-  database: "postgres",
+  password: "46511594",
+  database: "pokedex",
   port: 5432,
 };
 
