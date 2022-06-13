@@ -3,8 +3,8 @@ const { Pool } = require("pg");
 const config = {
   user: "postgres",
   host: "localhost",
-  password: "postgres",
-  database: "ftuno",
+  password: "basesback",
+  database: "postgres",
   port: 5432,
 };
 
