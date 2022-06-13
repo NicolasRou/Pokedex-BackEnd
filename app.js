@@ -2,15 +2,17 @@ const express = require('express')
 const axios = require('axios');
 const db = require('./db/index');
 const app = express()
-const bodyParser = require("body-parser")
 const port = 5431
 const cors = require ("cors")
+const usersRoutes = require("./routes/user");
 
 
 
 app.use (cors())
-app.use(bodyParser.urlencoded({extended:false}))
-app.use(bodyParser.json());
+app.use(express.json());
+app.use(express.urlencoded({ extended: true }));
+app.use("/users", usersRoutes);
+
 
 app.get ('/pokemones', async (req,res,next) => {
 
@@ -84,7 +86,7 @@ app.get ('/pokemones', async (req,res,next) => {
   })
 
 
- 
+
 app.listen(port, () => {
   console.log(`Ejecutando aplicación.... ${port}`)
 })
