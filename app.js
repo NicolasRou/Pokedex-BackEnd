@@ -69,7 +69,7 @@ app.get("/pokemones", async (req, res, next) => {
   }
 });
 
-app.post("/agregarPokemon", async (req, res, next) => {
+app.post("/pokemon", async (req, res, next) => {
   try {
     const newPokemon = req.body;
 
@@ -110,6 +110,22 @@ app.post("/agregarPokemon", async (req, res, next) => {
     return res.send({
       succes: true,
       data: { createPokemon, createAbout, newBaseStats },
+    });
+  } catch (error) {
+    return next(error);
+  }
+});
+
+app.get("/pokemones/:namePokemon", async (req, res, next) => {
+  try {
+    const namePokemon = req.params.namePokemon;
+    const pokemones = await db.query("select * from pokemon where name = $1", [
+      namePokemon,
+    ]);
+    const selectPokemon = pokemones.rows[0];
+    return res.send({
+      succes: true,
+      data: { selectPokemon },
     });
   } catch (error) {
     return next(error);
