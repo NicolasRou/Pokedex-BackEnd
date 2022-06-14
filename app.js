@@ -1,5 +1,4 @@
 const express = require('express')
-const axios = require('axios');
 const db = require('./db/index');
 const app = express()
 const port = 5431
@@ -73,52 +72,52 @@ app.get("/pokemones", async (req, res, next) => {
   }
 });
 
-app.post("/pokemon", async (req, res, next) => {
-  try {
-    const newPokemon = req.body;
+// app.post("/pokemon", async (req, res, next) => {
+//   try {
+//     const newPokemon = req.body;
 
-    const createAbout = await db.query(
-      "insert into about(height, weight, moves) values($1, $2, $3)",
-      [newPokemon.height, newPokemon.weight, newPokemon.moves]
-    );
+//     const createAbout = await db.query(
+//       "insert into about(height, weight, moves) values($1, $2, $3)",
+//       [newPokemon.height, newPokemon.weight, newPokemon.moves]
+//     );
 
-    const aboutId = await db.query("select max(id) from about");
+//     const aboutId = await db.query("select max(id) from about");
 
-    const newBaseStats = await db.query(
-      "insert into base_stats(hp, def, atk, satk, sdef, spd) values($1, $2, $3, $4, $5, $6)",
-      [
-        newPokemon.hp,
-        newPokemon.def,
-        newPokemon.atk,
-        newPokemon.satk,
-        newPokemon.sdef,
-        newPokemon.spd,
-      ]
-    );
+//     const newBaseStats = await db.query(
+//       "insert into base_stats(hp, def, atk, satk, sdef, spd) values($1, $2, $3, $4, $5, $6)",
+//       [
+//         newPokemon.hp,
+//         newPokemon.def,
+//         newPokemon.atk,
+//         newPokemon.satk,
+//         newPokemon.sdef,
+//         newPokemon.spd,
+//       ]
+//     );
 
-    const baseStatsId = await db.query("select max(id) from base_stats");
+//     const baseStatsId = await db.query("select max(id) from base_stats");
 
-    const createPokemon = await db.query(
-      "insert into pokemon(name, info, img, about_id, base_stats_id, element_1, element_2) values($1, $2, $3, $4, $5, $6, $7)",
-      [
-        newPokemon.name,
-        newPokemon.info,
-        newPokemon.img,
-        aboutId.rows[0].max,
-        baseStatsId.rows[0].max,
-        newPokemon.element_1,
-        newPokemon.element_2,
-      ]
-    );
+//     const createPokemon = await db.query(
+//       "insert into pokemon(name, info, img, about_id, base_stats_id, element_1, element_2) values($1, $2, $3, $4, $5, $6, $7)",
+//       [
+//         newPokemon.name,
+//         newPokemon.info,
+//         newPokemon.img,
+//         aboutId.rows[0].max,
+//         baseStatsId.rows[0].max,
+//         newPokemon.element_1,
+//         newPokemon.element_2,
+//       ]
+//     );
 
-    return res.send({
-      succes: true,
-      data: { createPokemon, createAbout, newBaseStats },
-    });
-  } catch (error) {
-    return next(error);
-  }
-});
+//     return res.send({
+//       succes: true,
+//       data: { createPokemon, createAbout, newBaseStats },
+//     });
+//   } catch (error) {
+//     return next(error);
+//   }
+// });
 
 app.get("/pokemones/:namePokemon", async (req, res, next) => {
   try {
